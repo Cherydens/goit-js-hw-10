@@ -24,13 +24,13 @@ function onInput(evt) {
   fetchCountries(inputValue)
     .then(response => {
       if (!response.ok) {
-        throw new Error('Oops, there is no country with that name');
+        throw new Error(
+          `Oops, there is no country with that name "${inputValue}"`
+        );
       }
       return response.json();
     })
-
     .then(parseData)
-
     .catch(onError);
 }
 
@@ -41,11 +41,11 @@ function parseData(data) {
   }
 
   if (data.length > 1) {
-    refs.countryList.innerHTML = markupCountryList(data);
+    renderCountryList(data);
     return;
   }
 
-  refs.countryInfo.innerHTML = markupCountryInfo(data);
+  renderCountryInfo(data);
 }
 
 function toManyInfo() {
@@ -53,7 +53,15 @@ function toManyInfo() {
 }
 
 function onError(error) {
-  return Notify.failure(error.toString());
+  Notify.failure(error.toString());
+}
+
+function renderCountryList(data) {
+  refs.countryList.innerHTML = markupCountryList(data);
+}
+
+function renderCountryInfo(data) {
+  refs.countryInfo.innerHTML = markupCountryInfo(data);
 }
 
 function clearOutput() {
