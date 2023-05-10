@@ -29,21 +29,23 @@ function onInput(evt) {
       return response.json();
     })
 
-    .then(data => {
-      if (data.length > 10) {
-        toManyInfo();
-        return;
-      }
-
-      if (data.length > 1) {
-        refs.countryList.innerHTML = markupCountryList(data);
-        return;
-      }
-
-      refs.countryInfo.innerHTML = markupCountryInfo(data);
-    })
+    .then(parseData)
 
     .catch(onError);
+}
+
+function parseData(data) {
+  if (data.length > 10) {
+    toManyInfo();
+    return;
+  }
+
+  if (data.length > 1) {
+    refs.countryList.innerHTML = markupCountryList(data);
+    return;
+  }
+
+  refs.countryInfo.innerHTML = markupCountryInfo(data);
 }
 
 function toManyInfo() {
