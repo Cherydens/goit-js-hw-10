@@ -20,7 +20,15 @@ function onInput(evt) {
   if (!inputValue) {
     return;
   }
-  fetchCountries(inputValue).then(parseData).catch(Notify.failure);
+  fetchCountries(inputValue)
+    .then(parseData)
+    .catch(error => {
+      if (error.message === '404') {
+        Notify.failure('Oops, there is no country with that name');
+        return;
+      }
+      console.log(error);
+    });
 }
 
 function parseData(data) {
