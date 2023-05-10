@@ -1,4 +1,6 @@
-export const markupCountryList = function (countries) {
+export { markupCountryInfo, markupCountryList };
+
+function markupCountryList(countries) {
   return countries
     .map(({ name, flags }) => {
       return `<li class="country-title">
@@ -7,11 +9,9 @@ export const markupCountryList = function (countries) {
               </li>`;
     })
     .join('');
-};
+}
 
-export const markupCountryInfo = function ([
-  { name, capital, population, flags, languages },
-]) {
+function markupCountryInfo([{ name, capital, population, flags, languages }]) {
   return `<div class="country-title">
             <img class="country-img" src="${flags.svg}" alt="${name.official}"/>
             <p class="country-name">${name.official}</p>
@@ -24,4 +24,4 @@ export const markupCountryInfo = function ([
             ).join(', ')}</p>
             
           </div>`;
-};
+}
