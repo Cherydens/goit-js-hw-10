@@ -20,23 +20,12 @@ function onInput(evt) {
   if (!inputValue) {
     return;
   }
-
-  fetchCountries(inputValue)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(
-          `Oops, there is no country with that name "${inputValue}"`
-        );
-      }
-      return response.json();
-    })
-    .then(parseData)
-    .catch(onError);
+  fetchCountries(inputValue).then(parseData).catch(Notify.failure);
 }
 
 function parseData(data) {
   if (data.length > 10) {
-    toManyInfo();
+    Notify.info('Too many matches found. Please enter a more specific name.');
     return;
   }
 
@@ -46,14 +35,6 @@ function parseData(data) {
   }
 
   renderCountryInfo(data);
-}
-
-function toManyInfo() {
-  Notify.info('Too many matches found. Please enter a more specific name.');
-}
-
-function onError(error) {
-  Notify.failure(error.toString());
 }
 
 function renderCountryList(data) {
